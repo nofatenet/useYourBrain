@@ -1,0 +1,17 @@
+.grid {
+    display: flex;
+    flex-wrap: wrap;
+    width: 480px;
+    height: 320px;
+}
+
+.card{
+    cursor: pointer;
+    border: 1px solid #333;
+    border-radius: 8px;
+    background-color: #111;
+}
+
+.card:hover {
+    border: 1px solid #999;
+}

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="color-scheme" content="dark">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Use Your Brain</title>
+    <link rel="stylesheet" href="style.css">
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+
+            //Card Controls:
+            const cardArray = [
+                {
+                    name: "bat",
+                    img: "images/card-bat-100.png"
+                },
+                {
+                    name: "camp",
+                    img: "images/card-camp-100.png"
+                },
+                {
+                    name: "darkmonk",
+                    img: "images/card-darkmonk-100.png"
+                },
+                {
+                    name: "meal",
+                    img: "images/card-meal-100.png"
+                },
+                {
+                    name: "player",
+                    img: "images/card-player-100.png"
+                },
+                {
+                    name: "spider",
+                    img: "images/card-spider-100.png"
+                },
+                {
+                    name: "trees",
+                    img: "images/card-trees-100.png"
+                },
+                {
+                    name: "village",
+                    img: "images/card-village-100.png"
+                },
+                
+                /* Here are the matches - everybody needs a partner! */
+                {
+                    name: "bat",
+                    img: "images/card-bat-100.png"
+                },
+                {
+                    name: "camp",
+                    img: "images/card-camp-100.png"
+                },
+                {
+                    name: "darkmonk",
+                    img: "images/card-darkmonk-100.png"
+                },
+                {
+                    name: "meal",
+                    img: "images/card-meal-100.png"
+                },
+                {
+                    name: "player",
+                    img: "images/card-player-100.png"
+                },
+                {
+                    name: "spider",
+                    img: "images/card-spider-100.png"
+                },
+                {
+                    name: "trees",
+                    img: "images/card-trees-100.png"
+                },
+                {
+                    name: "village",
+                    img: "images/card-village-100.png"
+                }
+            ];
+
+            cardArray.sort( () => 0.5 - Math.random() );
+
+            //Grid:
+            const gridDOM = document.querySelector(".grid");
+            let cardsChosen = [];
+            let cardsChosenId = [];
+            let cardsWon = [];
+
+
+            //Create Playboard:
+            const createBoard = () => {
+                for (let i = 0; i < cardArray.length; i++) {
+                    let card = document.createElement("img");
+                    card.setAttribute("src", "images/card-card-100.png");
+                    card.setAttribute("data-id", i); // Every Card get's it's Number from the [i] iteration of this loop.
+                    
+                    card.classList.add("card");
+
+                    card.addEventListener("click", flipCard);
+
+                    gridDOM.appendChild(card);
+                };
+            };
+
+
+            //Check For Match:
+            const checkForMatch = () => {
+                let cards = document.querySelectorAll("img");
+                const selectOneId = cardsChosenId[0];
+                const selectTwoId = cardsChosenId[1];
+                if (cardsChosen[0] === cardsChosen[1]) {
+                    //alert("MATCH");
+                    cards[selectOneId].setAttribute("src", "images/card-picked-100.png");
+                    cards[selectTwoId].setAttribute("src", "images/card-picked-100.png");
+                    cardsWon.push(cardsChosen);
+                } else {
+                    //alert("No Match");
+                    cards[selectOneId].setAttribute("src", "images/card-card-100.png");
+                    cards[selectTwoId].setAttribute("src", "images/card-card-100.png");
+                };
+                cardsChosen = [];
+                cardsChosenId = [];
+                resultDisplay = 0;
+
+                if(cardsWon.length === cardArray.length / 2){
+                    console.log("WON");
+                };
+
+            };
+
+            //Flip Card:
+            function flipCard(){
+                var cardId = this.getAttribute("data-id");
+                cardsChosen.push(cardArray[cardId].name);
+                cardsChosenId.push(cardId);
+                this.setAttribute("src", cardArray[cardId].img);
+
+                if(cardsChosen.length === 2) {
+                    setTimeout(checkForMatch, 500);
+                };
+            };
+                //Can not be written as an arrow function? why?
+
+
+
+            createBoard();
+
+
+
+        });
+    </script>
+</head>
+<body>
+    
+    <!-- <p>Score: <span id="result"></span></p> -->
+
+    <div class="grid">
+
+    </div>
+
+</body>
+</html>
