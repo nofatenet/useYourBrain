@@ -84,9 +84,18 @@
 
             //Grid:
             const gridDOM = document.querySelector(".grid");
+
+            //Stacks:
+            const stackOneDOM = document.querySelector("#stackOne");
+            const stackTwoDOM = document.querySelector("#stackTwo");
+
+            //Game Mechanics:
             let cardsChosen = [];
             let cardsChosenId = [];
             let cardsWon = [];
+
+            //Players:
+            let player = true;
 
 
             //Create Playboard:
@@ -104,6 +113,27 @@
                 };
             };
 
+            //Create Stack:
+            const createStack = () => {
+                let stackCard = document.createElement("img");
+                stackCard.setAttribute("src", "images/card-card-20.png");
+                player ? stackOneDOM.appendChild(stackCard) : stackTwoDOM.appendChild(stackCard);
+            };
+
+            //Change Players Turns:
+            const playerChange = () => {
+                player = !player;
+                    console.log(player);
+                    if(!player) {
+                        document.querySelector("#stackOne").classList.remove("active");
+                        document.querySelector("#stackTwo").classList.add("active");
+                        console.log("player two is active");
+                    } else {
+                        document.querySelector("#stackTwo").classList.remove("active");
+                        document.querySelector("#stackOne").classList.add("active");
+                        console.log("player one is active");
+                    };
+            };
 
             //Check For Match:
             const checkForMatch = () => {
@@ -115,15 +145,23 @@
                     cards[selectOneId].setAttribute("src", "images/card-picked-100.png");
                     cards[selectTwoId].setAttribute("src", "images/card-picked-100.png");
                     cardsWon.push(cardsChosen);
+
+                    //Add Card to Stack:
+                    createStack();
                 } else {
                     //alert("No Match");
                     cards[selectOneId].setAttribute("src", "images/card-card-100.png");
                     cards[selectTwoId].setAttribute("src", "images/card-card-100.png");
+
+                    //Player-change:
+                    playerChange();
+
                 };
                 cardsChosen = [];
                 cardsChosenId = [];
                 resultDisplay = 0;
 
+                //Game Over:
                 if(cardsWon.length === cardArray.length / 2){
                     console.log("WON");
                 };
@@ -138,16 +176,13 @@
                 this.setAttribute("src", cardArray[cardId].img);
 
                 if(cardsChosen.length === 2) {
-                    setTimeout(checkForMatch, 500);
+                    setTimeout(checkForMatch, 1000);
                 };
             };
                 //Can not be written as an arrow function? why?
 
 
-
             createBoard();
-
-
 
         });
     </script>
@@ -157,8 +192,11 @@
     <!-- <p>Score: <span id="result"></span></p> -->
 
     <div class="grid">
-
     </div>
+    <p></p>
+
+    <div class="stack active" id="stackOne">player one: </div>
+    <div class="stack" id="stackTwo">player two: </div>
 
 </body>
 </html>

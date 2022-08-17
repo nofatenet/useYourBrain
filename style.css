@@ -15,3 +15,25 @@
 .card:hover {
     border: 1px solid #999;
 }
+
+/* Stacks: NOTE that ID has a higher priority than class, so class is not overwriting ID rules, even if it's declared after the ID */
+/* https://stackoverflow.com/questions/4072365/understanding-css-selector-priority-specificity */
+/* Please do not use the FREAKING !important */
+
+#stackOne{
+    margin-top: 6em;
+}
+
+.stack{
+    margin: 1em;
+    margin-top: 2em;
+    width: 23em;
+    background-color: #111;
+    font-family: arial;
+    color: #777;
+}
+
+.active{
+    text-decoration: underline;
+    color: #ddd;
+}
