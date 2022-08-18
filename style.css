@@ -33,7 +33,28 @@
     color: #777;
 }
 
+.stack img{
+    border: solid 1px #333;
+    border-radius: 3px;
+}
+
 .active{
     text-decoration: underline;
     color: #ddd;
+}
+
+.cardFade {
+    position:relative;
+    animation: cardAnim 1s ease-out forwards;
+    animation-iteration-count: 1;
+}
+
+@keyframes cardAnim
+{
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0.5;
+    }
 }

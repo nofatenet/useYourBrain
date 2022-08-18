@@ -79,7 +79,8 @@
                     img: "images/card-village-100.png"
                 }
             ];
-
+            
+            //Shuffle:
             cardArray.sort( () => 0.5 - Math.random() );
 
             //Grid:
@@ -88,6 +89,8 @@
             //Stacks:
             const stackOneDOM = document.querySelector("#stackOne");
             const stackTwoDOM = document.querySelector("#stackTwo");
+            const stackOneDOMscore = document.querySelector("#stackScoreOne");
+            const stackTwoDOMscore = document.querySelector("#stackScoreTwo");
 
             //Game Mechanics:
             let cardsChosen = [];
@@ -117,13 +120,13 @@
             const createStack = () => {
                 let stackCard = document.createElement("img");
                 stackCard.setAttribute("src", "images/card-card-20.png");
+
                 player ? stackOneDOM.appendChild(stackCard) : stackTwoDOM.appendChild(stackCard);
             };
 
             //Change Players Turns:
             const playerChange = () => {
                 player = !player;
-                    console.log(player);
                     if(!player) {
                         document.querySelector("#stackOne").classList.remove("active");
                         document.querySelector("#stackTwo").classList.add("active");
@@ -142,8 +145,13 @@
                 const selectTwoId = cardsChosenId[1];
                 if (cardsChosen[0] === cardsChosen[1]) {
                     //alert("MATCH");
-                    cards[selectOneId].setAttribute("src", "images/card-picked-100.png");
-                    cards[selectTwoId].setAttribute("src", "images/card-picked-100.png");
+                    cards[selectOneId].classList.add("cardFade");
+                    cards[selectTwoId].classList.add("cardFade");
+                    setTimeout(() => {
+                        cards[selectOneId].setAttribute("src", "images/card-picked-100.png");
+                        cards[selectTwoId].setAttribute("src", "images/card-picked-100.png");
+                    }, 300);
+                    
                     cardsWon.push(cardsChosen);
 
                     //Add Card to Stack:
@@ -159,11 +167,15 @@
                 };
                 cardsChosen = [];
                 cardsChosenId = [];
-                resultDisplay = 0;
+
+                //Update Score(-1 to remove the span adding to the count):
+                stackOneDOMscore.innerHTML = stackOneDOM.childElementCount -1 + " ";
+                stackTwoDOMscore.innerHTML = stackTwoDOM.childElementCount -1 + " ";
 
                 //Game Over:
                 if(cardsWon.length === cardArray.length / 2){
-                    console.log("WON");
+                    console.log("GAME OVER");
+                    //location.reload();
                 };
 
             };
@@ -188,15 +200,12 @@
     </script>
 </head>
 <body>
-    
-    <!-- <p>Score: <span id="result"></span></p> -->
 
     <div class="grid">
     </div>
-    <p></p>
 
-    <div class="stack active" id="stackOne">player one: </div>
-    <div class="stack" id="stackTwo">player two: </div>
+    <div class="stack active" id="stackOne">player one: <span id="stackScoreOne">0</span></div>
+    <div class="stack" id="stackTwo">player two: <span id="stackScoreTwo">0</span></div>
 
 </body>
 </html>
