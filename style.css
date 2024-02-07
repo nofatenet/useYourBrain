@@ -58,3 +58,17 @@
         opacity: 0.5;
     }
 }
+
+/* small Devices */
+@media (max-width: 412px) {
+    .grid{
+        scale: 82%;
+        top: -1em;
+        left: -2em;
+        position: absolute;
+    }
+    
+    #stackOne{
+        margin-top: 22em;
+    }
+}
