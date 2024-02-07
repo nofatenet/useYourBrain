@@ -145,17 +145,29 @@
                 const selectTwoId = cardsChosenId[1];
                 if (cardsChosen[0] === cardsChosen[1]) {
                     //alert("MATCH");
-                    cards[selectOneId].classList.add("cardFade");
-                    cards[selectTwoId].classList.add("cardFade");
-                    setTimeout(() => {
-                        cards[selectOneId].setAttribute("src", "images/card-picked-100.png");
-                        cards[selectTwoId].setAttribute("src", "images/card-picked-100.png");
-                    }, 300);
                     
-                    cardsWon.push(cardsChosen);
+                    if (cards[selectOneId] && cards[selectTwoId]) {
+                        cards[selectOneId].removeEventListener("click", flipCard);
+                        cards[selectTwoId].removeEventListener("click", flipCard);
+                    
+                        //cards[selectOneId].classList.remove("card");
+                        //cards[selectTwoId].classList.remove("card");
+                    
+                        cards[selectOneId].classList.add("cardFade");
+                        cards[selectTwoId].classList.add("cardFade");
+                    
+                        setTimeout(() => {
+                            cards[selectOneId].setAttribute("src", "images/card-picked-100.png");
+                            cards[selectTwoId].setAttribute("src", "images/card-picked-100.png");
+                        }, 300);
 
-                    //Add Card to Stack:
-                    createStack();
+                        cardsWon.push(cardsChosen);
+
+                        //Add Card to Stack:
+                        createStack();
+                    
+                    };
+                    
                 } else {
                     //alert("No Match");
                     cards[selectOneId].setAttribute("src", "images/card-card-100.png");
@@ -182,11 +194,13 @@
 
             //Flip Card:
             function flipCard(){
-                var cardId = this.getAttribute("data-id");
-                cardsChosen.push(cardArray[cardId].name);
-                cardsChosenId.push(cardId);
-                this.setAttribute("src", cardArray[cardId].img);
-
+                if(cardsChosen.length < 2) {
+                    let cardId = this.getAttribute("data-id");
+                    cardsChosen.push(cardArray[cardId].name);
+                    cardsChosenId.push(cardId);
+                    this.setAttribute("src", cardArray[cardId].img);
+                };
+                
                 if(cardsChosen.length === 2) {
                     setTimeout(checkForMatch, 1000);
                 };
