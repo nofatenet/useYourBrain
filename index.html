@@ -81,7 +81,11 @@
             ];
             
             //Shuffle:
-            cardArray.sort( () => 0.5 - Math.random() );
+            const shuffle = () => {
+                cardArray.sort( () => 0.5 - Math.random() );
+            };
+            
+            shuffle();
 
             //Grid:
             const gridDOM = document.querySelector(".grid");
@@ -96,6 +100,7 @@
             let cardsChosen = [];
             let cardsChosenId = [];
             let cardsWon = [];
+            let gameOver = false;
 
             //Players:
             let player = true;
@@ -103,6 +108,7 @@
 
             //Create Playboard:
             const createBoard = () => {
+                gameOver = false;
                 for (let i = 0; i < cardArray.length; i++) {
                     let card = document.createElement("img");
                     card.setAttribute("src", "images/card-card-100.png");
@@ -187,6 +193,8 @@
                 //Game Over:
                 if(cardsWon.length === cardArray.length / 2){
                     console.log("GAME OVER");
+                    gameOver = true;
+                    ReBtn.style.display = "block"
                     //location.reload();
                 };
 
@@ -206,10 +214,23 @@
                 };
             };
                 //Can not be written as an arrow function? why?
-
+            
+            function emptyGrid(){
+                //Do not Remove the div! Just Empty it!
+                gridDOM.innerHTML = "";
+            };
+            
+            function resetBoard(){
+                emptyGrid();
+                setTimeout(createBoard, 200);
+                shuffle();
+            };
 
             createBoard();
-
+            const ReBtn = document.querySelector("#resetButtonDOM");
+            ReBtn.addEventListener("click", resetBoard);
+            ReBtn.style.display = "none";
+            
         });
     </script>
 </head>
@@ -220,6 +241,6 @@
 
     <div class="stack active" id="stackOne">player one: <span id="stackScoreOne">0</span></div>
     <div class="stack" id="stackTwo">player two: <span id="stackScoreTwo">0</span></div>
-
+    <button id="resetButtonDOM"> Game is Over! Restart? </button>
 </body>
 </html>
